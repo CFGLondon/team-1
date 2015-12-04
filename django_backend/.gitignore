@@ -1,0 +1,10 @@
+*.log
+*.pot
+*.pyc
+htmlcov/
+.coverage
+*.jpg
+*.png
+*.gif
+assets/static/bower_components/*
+assets/static/compressed/*

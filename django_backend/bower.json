@@ -1,0 +1,27 @@
+{
+  "name": "portfolio",
+  "version": "0.0.0",
+  "license": "MIT",
+  "directory": "assets/static",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "App States": "bower.json#~0.6.9",
+    "angular": "~1.4.0",
+    "angular-cookies": "~1.4.0",
+    "angular-route": "~1.4.0",
+    "angular-ui-router": null,
+    "bootstrap": "~3.3.0",
+    "bootstrap-material-design": "~0.1.5",
+    "jquery": "~2.1.1",
+    "material-design-lite": null,
+    "ngDialog": "~0.5.1",
+    "snackbarjs": null,
+    "underscore": "~1.7.0"
+  }
+}

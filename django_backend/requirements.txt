@@ -1,0 +1,10 @@
+Django==1.8.4
+djangorestframework==3.2.3
+drf-nested-routers==0.9.0
+django-compressor==1.4
+djangorestframework-jwt==1.7.2
+requests==2.7.0
+django-bulk-update==1.1.4
+django-silk==0.5.6
+coverage==4.0
+python-dateutil==2.4.2
