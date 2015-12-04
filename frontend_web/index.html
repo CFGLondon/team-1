@@ -32,7 +32,8 @@
                     <li><a href="#home" class="nav-tab">Home</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <!-- login and create account links go here -->
+                    <li><a href="#login" class="nav-tab">Login</a></li>
+                    <!--<li><a href="#create-account" class="nav-tab">Create account</a></li>-->
                 </ul>
             </div><!--/.nav-collapse -->
         </div>
@@ -65,6 +66,65 @@
                     stuff here. Let's put some useful stuff here. Let's put some useful stuff here.
                     Let's put some useful stuff here. Let's put some useful stuff here. Let's put some useful stuff
                     here.</p>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!-- Login template -->
+<script id="login-template" type="text/template">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="page-header">
+                    <h3>User Login</h3>
+                </div>
+
+                <form class="form-horizontal" id="user-login-form">
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="user-login-email-input">Email</label>
+                        <div class="col-sm-9">
+                            <input class="form-control input-sm" placeholder="Email" type="email" id="user-login-email-input" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="user-login-password-input">Password</label>
+                        <div class="col-sm-9">
+                            <input class="form-control input-sm" type="password" placeholder="Password" id="user-login-password-input" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-9">
+                            <button class="btn btn-primary btn-sm" type="submit" id="user-login-submit-button">Login</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-5 col-md-offset-1">
+                <div class="page-header">
+                    <h3>Company Login</h3>
+                </div>
+
+                <form class="form-horizontal" id="company-login-form">
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="company-login-email-input">Email</label>
+                        <div class="col-sm-9">
+                            <input class="form-control input-sm" placeholder="Email" type="email" id="company-login-email-input" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="company-login-password-input">Password</label>
+                        <div class="col-sm-9">
+                            <input class="form-control input-sm" type="password" placeholder="Password" id="company-login-password-input" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-9">
+                            <button class="btn btn-primary btn-sm" type="submit" id="company-login-submit-button">Login</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
