@@ -1,0 +1,33 @@
+/**
+ * Created by manas on 03-12-2015.
+ */
+
+var Backbone = require("backbone");
+var $ = window.$;
+var homeView = require("./views/home");
+var navView = require("./views/nav");
+var pageNotFoundView = require("./views/page_not_found");
+
+window.$ = window.jQuery = require("jquery"); // needed in order to make bootstrap's javascript work
+
+var AppRouter = Backbone.Router.extend({
+    routes: {
+        "home": "showHome",
+        "*any": "show404"
+    },
+    showHome: function () {
+        homeView.render();
+    },
+    show404: function () {
+        pageNotFoundView.render();
+    }
+});
+
+module.exports = {
+    init: function () {
+        navView.render();
+
+        new AppRouter();
+        Backbone.history.start();
+    }
+};
