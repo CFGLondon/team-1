@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>A-Team</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="stylesheets/index.css">
+</head>
+<body>
+
+<!-- Main content -->
+<div id="nav"></div>
+<div id="notifications"></div>
+<div id="content"></div>
+
+<!-- Navigation bar template -->
+<script id="nav-template" type="nav-template">
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#home">A-Team</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="#home" class="nav-tab">Home</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- login and create account links go here -->
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+</script>
+
+<!-- Home template -->
+<script id="home-template" type="text/template">
+    <div class="container">
+        <div class="page-header">
+            <h1>The A-Team</h1>
+            <p class="lead">Manas Bajaj, T Kokke, Marton Shellz, Dan Ristea</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Heading maybe?</h3>
+                <p>Let's put some useful stuff here. Let's put some useful stuff here. Let's put some useful
+                    stuff here. Let's put some useful stuff here. Let's put some useful stuff here.
+                    Let's put some useful stuff here. Let's put some useful stuff here. Let's put some useful
+                    stuff here. Let's put some useful stuff here. Let's put some useful stuff here.
+                    Let's put some useful stuff here. Let's put some useful stuff here. Let's put some useful stuff
+                    here.</p>
+            </div>
+            <div class="col-md-6">
+                <h3>Another heading maybe?</h3>
+                <p>Let's put some useful stuff here. Let's put some useful stuff here. Let's put some useful
+                    stuff here. Let's put some useful stuff here. Let's put some useful stuff here.
+                    Let's put some useful stuff here. Let's put some useful stuff here. Let's put some useful
+                    stuff here. Let's put some useful stuff here. Let's put some useful stuff here.
+                    Let's put some useful stuff here. Let's put some useful stuff here. Let's put some useful stuff
+                    here.</p>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!-- 404 template -->
+<script id="404-template" type="text/template">
+    <div class="container">
+        <div class="col-md-offset-4">
+            <h2>Page not found. Please try again.</h2>
+        </div>
+    </div>
+</script>
+
+<!-- Javascripts -->
+<script src="javascripts/main.min.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
