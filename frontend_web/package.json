@@ -1,0 +1,16 @@
+{
+  "name": "team-1",
+  "version": "1.0.0",
+  "dependencies": {
+    "backbone": "latest",
+    "bootstrap": "latest",
+    "browserify": "latest",
+    "http-server": "latest",
+    "jquery": "latest",
+    "swig": "latest"
+  },
+  "scripts": {
+    "build": "browserify ./javascripts/main.js -o ./javascripts/main.min.js",
+    "start": "npm run build && http-server -p 4000"
+  }
+}
