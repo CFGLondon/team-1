@@ -9,7 +9,7 @@ class AccountSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'password', 'confirm_password',)
+        fields = ('id', 'username', 'email', 'password')
 
     def create(self, validated_data):
         return User.objects.create(**validated_data)
@@ -20,11 +20,9 @@ class AccountSerializer(serializers.ModelSerializer):
         instance.save()
 
         password = validated_data.get('password', None)
-        confirm_password = validated_data.get('confirm_password', None)
 
-        if password and confirm_password and password == confirm_password:
-            instance.set_password(password)
-            instance.save()
+        instance.set_password(password)
+        instance.save()
 
         update_session_auth_hash(self.context.get('request'), instance)
 

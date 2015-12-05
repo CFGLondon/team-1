@@ -10,16 +10,20 @@ class AuthenticationViewTestCase(TestCase):
     response = None
 
     def setUp(self):
-        self.response = self.client.post("/auth/api/accounts/", {"username": "Heffalumps", "password": "Woozles", "email": "woozles@email.com"})
+        self.response = self.client.post("/auth/api/user/register/", {"username": "Heffalumps", "password": "Woozles", "email": "woozles@email.com", "location": "Dreamland"})
 
-    def test_create_account(self):
-        response_content = json.loads(self.response.content.decode('utf-8'))
-        self.assertEqual("Heffalumps", response_content["username"], "Response should contain the username.")
-        self.assertEqual("Woozles", response_content["password"], "Response should contain the password.")
-
-        latest_account = User.objects.latest('date_joined')
+    def test_create_user_account(self):
+        latest_account = User.objects.get(username="Heffalumps")
         self.assertEqual("Heffalumps", latest_account.username, "The username must be present in the database.")
-        self.assertEqual("woozles@email.com", latest_account.email, "The email must be present in the database.")
+        latest_user_profile = latest_account.userprofile
+        self.assertEqual("Dreamland", latest_user_profile.location, "The location of the user must be present in the database.")
+
+    def test_create_company_account(self):
+        self.response = self.client.post("/auth/api/company/register/", {"username": "Company1", "password": "Woozles", "name": "JP Morgan", "company_type": "sample_type", "email": "woozles@email.com", "description": "Hello"})
+        latest_account = User.objects.get(username="Company1")
+        self.assertEqual("Company1", latest_account.username, "The username must be present in the database.")
+        latest_company_profile = latest_account.companyprofile
+        self.assertEqual("JP Morgan", latest_company_profile.name, "The company name must be present in the database.")
 
     def test_unauthorised_access(self):
         response = self.client.post("/auth/api/get_token/", {"username": "Mango", "password": "Apple"})

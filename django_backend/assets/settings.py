@@ -77,6 +77,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'django.contrib.humanize',
     'authentication',
+    'jobapp',
     'silk'
 )
 

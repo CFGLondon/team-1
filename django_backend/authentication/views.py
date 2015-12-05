@@ -1,85 +1,54 @@
-from rest_framework import viewsets, status, permissions
+from rest_framework import status, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-
-
-from django.contrib.auth import authenticate, login, logout
 from django.http.response import HttpResponse
 import json
-
 from django.contrib.auth.models import User
-from authentication.permissions import IsAccountOwner
-from authentication.serializers import AccountSerializer
+from jobapp.models import UserProfile, CompanyProfile
 
 
-class AccountViewSet(viewsets.ModelViewSet):
-    lookup_field = 'username'
-    queryset = User.objects.all()
-    serializer_class = AccountSerializer
+class UserView(APIView):
 
-    def get_permissions(self):
-        if self.request.method in permissions.SAFE_METHODS:
-            return (permissions.AllowAny(),)
+    permission_classes = (permissions.AllowAny, )
 
-        if self.request.method == 'POST':
-            return (permissions.AllowAny(),)
+    def post(self, request):
+        username = request.POST.get("username", None)
+        password = request.POST.get("password", None)
+        location = request.POST.get("location", None)
 
-        return (permissions.IsAuthenticated(), IsAccountOwner(),)
+        user = User.objects.create_user(
+                 username=username,
+                 password=password)
 
-    def create(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data)
+        user_profile = UserProfile.objects.create(location=location, user=user)
 
-        if serializer.is_valid():
-
-            User.objects.create_user(**serializer.validated_data)
-
-            return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
-
-        return Response({
-            'status': 'Bad request',
-            'message': 'Account could not be created with received data.'
-        }, status=status.HTTP_400_BAD_REQUEST)
+        response_data = json.dumps({"authenticated": True})
+        return HttpResponse(response_data, content_type='application/json')
 
 
-class LoginView(APIView):
-    def post(self, request, format=None):
-        data = request.data
+class CompanyView(APIView):
 
-        username = data.get('username', None)
-        password = data.get('password', None)
+    permission_classes = (permissions.AllowAny, )
 
-        account = authenticate(username=username, password=password)
+    def post(self, request):
+        username = request.POST.get("username", None)
+        password = request.POST.get("password", None)
+        name = request.POST.get("name", None)
+        description = request.POST.get("description", None)
+        company_type = request.POST.get("company_type", None)
 
-        if account is not None:
-            if account.is_active:
-                login(request, account)
+        user = User.objects.create_user(
+                 username=username,
+                 password=password)
 
-                serialized = AccountSerializer(account)
+        company_profile = CompanyProfile.objects.create(name=name, description=description, company_type=company_type, user=user)
 
-                return Response(serialized.data)
-            else:
-                return Response({
-                    'status': 'Unauthorized',
-                    'message': 'This account has been disabled.'
-                }, status=status.HTTP_401_UNAUTHORIZED)
-        else:
-            return Response({
-                'status': 'Unauthorized',
-                'message': 'Username/password combination invalid.'
-            }, status=status.HTTP_401_UNAUTHORIZED)
-
-
-class LogoutView(APIView):
-    permission_classes = (permissions.IsAuthenticated,)
-
-    def post(self, request, format=None):
-        logout(request)
-
-        return Response({}, status=status.HTTP_204_NO_CONTENT)
-
+        response_data = json.dumps({"authenticated": True})
+        return HttpResponse(response_data, content_type='application/json')
 
 class RestrictedView(APIView):
+
     permission_classes = (permissions.IsAuthenticated, )
     authentication_classes = (JSONWebTokenAuthentication, )
 
