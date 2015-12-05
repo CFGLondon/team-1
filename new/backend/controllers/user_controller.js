@@ -237,22 +237,24 @@ router.post("/users/recompute-clusters", function (req, res) {
                 }
             }
 
-        }
-        for (var l = 0; l < user.dislikedOpportunities.length; l++) {
-            var op = user.dislikedOpportunities[i];
-            var weights = get_type_weights(op.type);
-            var weights2 = get_division_weights(op.division);
+            for (var l = 0; l < user.dislikedOpportunities.length; l++) {
+                var op = user.dislikedOpportunities[i];
+                var weights = get_type_weights(op.type);
+                var weights2 = get_division_weights(op.division);
 
-            for (var ll = 0; ll < vector.length; ll++) {
-                vector[ll] -= weights[ll];
-                vector[ll] -= weights2[ll];
+                for (var ll = 0; ll < vector.length; ll++) {
+                    vector[ll] -= weights[ll];
+                    vector[ll] -= weights2[ll];
+                }
             }
+            for (var i = 0; i < vector.length; i++) {
+                vector[i] /= totalOpportunities;
+                if (vector[i] < 0) vector[i] = 0;
+                if (vector[i] > 1) vector[i] = 1;
+            }
+            vectors.push(vector);
         }
-        for (var i = 0; i < vector.length; i++) {
-            if (vector[i] < 0) vector[i] = 0;
-            if (vector[i] > 1) vector[i] = 1;
-        }
-        vectors.push(vector);
+
     });
     var kmeans = require('node-kmeans');
     kmeans.clusterize(vectors, {k: Math.ceil(Math.sqrt(users.length))}, function (err, res) {
