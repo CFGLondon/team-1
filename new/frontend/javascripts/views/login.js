@@ -6,6 +6,7 @@ var Backbone = require("backbone");
 var $ = require("jquery");
 var swig = require("swig");
 var authController = require("../network/auth_controller");
+var notification = require("../notification");
 
 var LoginView = Backbone.View.extend({
     el: "#content",
@@ -49,11 +50,11 @@ var LoginView = Backbone.View.extend({
 
                 $(document).trigger("authenticated");
 
-                //new Notification({
-                //    $container: $("#notifications"),
-                //    message: "Logged in as: <strong>" + authController.getUserFromCache().userName + "</strong>",
-                //    style: "info"
-                //}).notify("show");
+                new Notification({
+                    $container: $("#notifications"),
+                    message: "Logged in as: <strong>" + authController.getAccountFromCache().name + "</strong>",
+                    style: "info"
+                }).notify("show");
 
                 console.log("success");
             },
@@ -61,11 +62,11 @@ var LoginView = Backbone.View.extend({
                 self.$userLoginButton.text("Login");
                 self.$userLoginButton.attr("disabled", false);
 
-                //new Notification({
-                //    $container: $("#notifications"),
-                //    message: "<strong>Error! </strong>" + error,
-                //    style: "danger"
-                //}).notify("show");
+                new Notification({
+                    $container: $("#notifications"),
+                    message: "<strong>Error! </strong>" + error,
+                    style: "danger"
+                }).notify("show");
 
                 console.log("nope error!");
             }
@@ -95,11 +96,11 @@ var LoginView = Backbone.View.extend({
 
                 $(document).trigger("authenticated");
 
-                //new Notification({
-                //    $container: $("#notifications"),
-                //    message: "Logged in as: <strong>" + authController.getUserFromCache().userName + "</strong>",
-                //    style: "info"
-                //}).notify("show");
+                new Notification({
+                    $container: $("#notifications"),
+                    message: "Logged in as: <strong>" + authController.getAccountFromCache().name + "</strong>",
+                    style: "info"
+                }).notify("show");
 
                 console.log("success");
             },
@@ -107,11 +108,11 @@ var LoginView = Backbone.View.extend({
                 self.$companyLoginButton.text("Login");
                 self.$companyLoginButton.attr("disabled", false);
 
-                //new Notification({
-                //    $container: $("#notifications"),
-                //    message: "<strong>Error! </strong>" + error,
-                //    style: "danger"
-                //}).notify("show");
+                new Notification({
+                    $container: $("#notifications"),
+                    message: "<strong>Error! </strong>" + error,
+                    style: "danger"
+                }).notify("show");
 
                 console.log("nope error!");
             }
