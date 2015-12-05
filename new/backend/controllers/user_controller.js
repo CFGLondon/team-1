@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var User = require("../models/user");
+var Opportunity = require("../models/opportunity");
 var async = require("async");
 var authTokenService = require("../services/auth_token");
 var authenticationMiddleware = require("../middleware/authentication");
@@ -190,6 +191,7 @@ router.post("/users/:user_id/dislike-opportunity/:opportunity_id", function (req
 
 router.post("/users/recompute-clusters", function (req, res) {
     var get_division_weights = function(type) {
+        console.log(type);
         switch (type) {
             case "technology":
                 return [1, 0.5, 0.4, 0.5, 0.5, 0.2, 0.3, 0, 0, 0, 0];
@@ -209,6 +211,7 @@ router.post("/users/recompute-clusters", function (req, res) {
     };
 
     var get_type_weights = function(type) {
+        console.log(type);
         switch (type) {
             case "part-time":
                 return [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0];
@@ -223,49 +226,72 @@ router.post("/users/recompute-clusters", function (req, res) {
 
     var vectors = [];
     User.find({}, function (err, users) {
-        console.log(JSON.stringify(users, null, 2));
+        async.series([
+            function(callback){
+                async.each(users, function(user, callback){
 
-        for (var i = 0; i < users.length; i++) {
+                    var vector = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+                    var totalOpportunities = user.likedOpportunities.length + user.dislikedOpportunities.length;
 
-            var vector = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
-            var user = users[i];
-            var totalOpportunities = user.likedOpportunities.length + user.dislikedOpportunities.length;
-            for (var j = 0; j < user.likedOpportunities.length; j++) {
-                var op = user.likedOpportunities[i];
-                var weights = get_type_weights(op.type);
-                var weights2 = get_division_weights(op.division);
-                for (var jj = 0; jj < vector.length; jj++) {
-                    vector[jj] += weights[jj];
-                    vector[jj] += weights2[jj];
-                }
-            }
 
-            for (var l = 0; l < user.dislikedOpportunities.length; l++) {
-                var op = user.dislikedOpportunities[i];
-                var weights = get_type_weights(op.type);
-                var weights2 = get_division_weights(op.division);
+                    async.each(user.likedOpportunities, function(likedOpportunity, callback) {
+                        if (user.likedOpportunities.length) {
+                            console.log(likedOpportunity);
+                            Opportunity.find({_id: likedOpportunity}, function (err, op) {
+                                console.log(op);
+                                var weights = get_type_weights(op.type);
+                                var weights2 = get_division_weights(op.division);
+                                for (var jj = 0; jj < vector.length; jj++) {
+                                    vector[jj] += weights[jj];
+                                    vector[jj] += weights2[jj];
+                                }
+                                callback();
+                            });
+                        }
 
-                for (var ll = 0; ll < vector.length; ll++) {
-                    vector[ll] -= weights[ll];
-                    vector[ll] -= weights2[ll];
-                }
+                    }, function() {
+                        console.log(" XXX" +user.dislikedOpportunities);
+                        if (user.dislikedOpportunities.length > 0)
+                        {
+                            async.each(user.dislikedOpportunities, function(dislikedOpportunity, callback) {
+                                Opportunity.find({_id: dislikedOpportunity}, function (err, op) {
+                                    console.log(op);
+                                    var weights = get_type_weights(op.type);
+                                    var weights2 = get_division_weights(op.division);
+
+                                    for (var ll = 0; ll < vector.length; ll++) {
+                                        vector[ll] -= weights[ll];
+                                        vector[ll] -= weights2[ll];
+                                    }
+                                    callback();
+                                });
+                            }, function() {
+                                callback();
+                            });
+                        }
+                        callback();
+                    });
+                }, function(){
+                    for (var l = 0; l < vector.length; l++) {
+                        vector[l] /= Math.max(totalOpportunities,1);
+                        if (vector[l] < 0) vector[l] = 0;
+                        if (vector[l] > 1) vector[l] = 1;
+                    }
+                    vectors.push(vector);
+                    callback();
+                });
+            }, function(callback) {
+                console.log(" FOR LOOP ENDED." );
+                var kmeans = require('node-kmeans');
+                kmeans.clusterize(vectors, {k: Math.floor(Math.sqrt(users.length))}, function (err, res) {
+                    if (err) console.error(err);
+                    else {
+                        console.log('%o', res);
+                        //update user cluster
+                    }
+                });
             }
-            for (var l = 0; l < vector.length; l++) {
-                vector[l] /= Math.max(totalOpportunities,1);
-                if (vector[l] < 0) vector[l] = 0;
-                if (vector[l] > 1) vector[l] = 1;
-            }
-            vectors.push(vector);
-        }
-        console.log(vectors);
-        var kmeans = require('node-kmeans');
-        kmeans.clusterize(vectors, {k: Math.ceil(Math.sqrt(users.length))}, function (err, res) {
-            if (err) console.error(err);
-            else {
-                console.log('%o', res);
-                //update user cluster
-            }
-        });
+        ]);
     });
 });
 
