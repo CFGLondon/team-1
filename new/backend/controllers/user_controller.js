@@ -223,8 +223,11 @@ router.post("/users/recompute-clusters", function (req, res) {
 
     var vectors = [];
     User.find({}, function (err, users) {
+        console.log(JSON.stringify(users, null, 2));
+
         for (var i = 0; i < users.length; i++) {
-            var vector = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+            var vector = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
             var user = users[i];
             var totalOpportunities = user.likedOpportunities.length + user.dislikedOpportunities.length;
             for (var j = 0; j < user.likedOpportunities.length; j++) {
@@ -247,22 +250,22 @@ router.post("/users/recompute-clusters", function (req, res) {
                     vector[ll] -= weights2[ll];
                 }
             }
-            for (var i = 0; i < vector.length; i++) {
-                vector[i] /= totalOpportunities;
-                if (vector[i] < 0) vector[i] = 0;
-                if (vector[i] > 1) vector[i] = 1;
+            for (var l = 0; l < vector.length; l++) {
+                vector[l] /= Math.max(totalOpportunities,1);
+                if (vector[l] < 0) vector[l] = 0;
+                if (vector[l] > 1) vector[l] = 1;
             }
             vectors.push(vector);
         }
-
-    });
-    var kmeans = require('node-kmeans');
-    kmeans.clusterize(vectors, {k: Math.ceil(Math.sqrt(users.length))}, function (err, res) {
-        if (err) console.error(err);
-        else {
-            console.log('%o', res);
-            //update user cluster
-        }
+        console.log(vectors);
+        var kmeans = require('node-kmeans');
+        kmeans.clusterize(vectors, {k: Math.ceil(Math.sqrt(users.length))}, function (err, res) {
+            if (err) console.error(err);
+            else {
+                console.log('%o', res);
+                //update user cluster
+            }
+        });
     });
 });
 
