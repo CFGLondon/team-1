@@ -1,0 +1,32 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "start:db": "mongod --dbpath data --smallfiles",
+    "test": "mocha tests",
+    "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- tests -R spec"
+  },
+  "dependencies": {
+    "express": "latest",
+    "morgan": "latest",
+    "body-parser": "latest",
+    "mongoose": "latest",
+    "body-parser": "latest",
+    "validator": "latest",
+    "bcrypt-nodejs": "latest",
+    "jsonwebtoken": "latest",
+    "validator": "latest",
+    "async": "latest",
+    "underscore": "latest"
+  },
+  "devDependencies": {
+    "nodemon": "latest",
+    "chai": "latest",
+    "mocha": "latest",
+    "supertest": "latest",
+    "istanbul": "latest"
+  },
+  "author": "Manas Bajaj"
+}
