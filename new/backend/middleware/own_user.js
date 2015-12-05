@@ -1,8 +1,4 @@
 /**
- * Created by manas on 16-09-2015.
- */
-
-/**
  * This middleware must be used AFTER authentication middleware since it requires the decoded
  * payload to be added to req object.
  */

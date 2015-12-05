@@ -1,7 +1,3 @@
-/**
- * Created by manas on 16-09-2015.
- */
-
 var jwt = require("jsonwebtoken");
 var config = require("../config");
 

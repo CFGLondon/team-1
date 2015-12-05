@@ -1,7 +1,3 @@
-/**
- * Created by manas on 05-12-2015.
- */
-
 var express = require("express");
 var router = express.Router();
 var Company = require("../models/company");

@@ -13,13 +13,12 @@
     "morgan": "latest",
     "body-parser": "latest",
     "mongoose": "latest",
-    "body-parser": "latest",
-    "validator": "latest",
     "bcrypt-nodejs": "latest",
     "jsonwebtoken": "latest",
     "validator": "latest",
     "async": "latest",
-    "underscore": "latest"
+    "underscore": "latest",
+    "node-kmeans": "latest"
   },
   "devDependencies": {
     "nodemon": "latest",

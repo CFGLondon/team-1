@@ -1,7 +1,3 @@
-/**
- * Created by manas on 16-09-2015.
- */
-
 var authTokenService = require("../services/auth_token");
 var User = require("../models/user");
 

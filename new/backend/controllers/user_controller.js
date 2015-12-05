@@ -1,7 +1,3 @@
-/**
- * Created by manas on 15-09-2015.
- */
-
 var express = require("express");
 var router = express.Router();
 var User = require("../models/user");

@@ -1,7 +1,3 @@
-/**
- * Created by manas on 15-09-2015.
- */
-
 var mongoose = require("mongoose");
 var bcrypt = require("bcrypt-nodejs");
 var validator = require('validator');

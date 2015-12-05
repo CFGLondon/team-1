@@ -1,7 +1,3 @@
-/**
- * Created by manas on 15-09-2015.
- */
-
 module.exports = function (req, res, next) {
 
     res.sendOk = function (data) {
