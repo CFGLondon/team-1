@@ -5,8 +5,8 @@ module.exports = function (amount) {
     {
 
         // SELECTIVE OPTIONS
-        var divisions = ["it","biology","sports","bank"];
-        var types = ["part-time", "full-time"];
+        var divisions = ["technology","science","teaching","management","finance","marketing","consulting"];
+        var types = ["part-time", "graduate","competition","apprenticeship"];
         var locations = ["London", "UK", "Manchester", "Glasgow", "Edinburgh", "Woking", "Addlestone"];
         var companyIDS = ["566264fd12ff39e018eb85e7","566277ceb3ba1c78196c6bb6","56628cf73d5d854028cfcd9a","56628cf63d5d854028cfcd95","56628cf53d5d854028cfcd93","56628cf53d5d854028cfcd92","56628cf53d5d854028cfcd91"]
 
