@@ -29,8 +29,13 @@ class CompanyProfile(models.Model):
 
 class Job(models.Model):
 
-   # Many to one relationship with Journey
     company_profile = models.ForeignKey(CompanyProfile, related_name='company_profile')
+
+    description = models.CharField(max_length=100)
+    type = models.CharField(max_length=100)
+    division = models.CharField(max_length=100)
+    location = models.CharField(max_length=100)
+    timestamp = models.CharField(max_length=100)
 
     def __unicode__(self):
         return '{0}'.format(self.id)
