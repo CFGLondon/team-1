@@ -191,7 +191,6 @@ router.post("/users/:user_id/dislike-opportunity/:opportunity_id", function (req
 
 router.post("/users/recompute-clusters", function (req, res) {
     var get_division_weights = function(type) {
-        console.log(type);
         switch (type) {
             case "technology":
                 return [1, 0.5, 0.4, 0.5, 0.5, 0.2, 0.3, 0, 0, 0, 0];
@@ -211,7 +210,6 @@ router.post("/users/recompute-clusters", function (req, res) {
     };
 
     var get_type_weights = function(type) {
-        console.log(type);
         switch (type) {
             case "part-time":
                 return [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0];
@@ -226,6 +224,7 @@ router.post("/users/recompute-clusters", function (req, res) {
 
     var vectors = [];
     User.find({}, function (err, users) {
+
         async.series([
             function(callback){
                 async.each(users, function(user, callback){
