@@ -158,4 +158,38 @@ router.route("/users/:user_id")
         });
     });
 
+router.post("/users/:user_id/like-opportunity/:opportunity_id", authenticationMiddleware, function (req, res) {
+    var opportunityId = req.params.opportunity_id;
+    var userId = req.params.user_id;
+
+    User.findById(userId, function (err, user) {
+        user.likedOpportunities.push(opportunityId);
+
+        if (user.likedOpportunities.indexOf(opportunityId) > -1) {
+            user.dislikedOpportunities.splice(user.likedOpportunities.indexOf(opportunityId), 1);
+        }
+
+        user.save(function (err) {
+            return res.sendOk();
+        });
+    });
+});
+
+router.post("/users/:user_id/dislike-opportunity/:opportunity_id", function (req, res) {
+    var opportunityId = req.params.opportunity_id;
+    var userId = req.params.user_id;
+
+    User.findById(userId, function (err, user) {
+        user.dislikedOpportunities.push(opportunityId);
+
+        if (user.likedOpportunities.indexOf(opportunityId) > -1) {
+            user.likedOpportunities.splice(user.likedOpportunities.indexOf(opportunityId), 1);
+        }
+
+        user.save(function (err) {
+            return res.sendOk();
+        });
+    });
+});
+
 module.exports = router;

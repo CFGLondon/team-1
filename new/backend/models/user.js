@@ -19,7 +19,9 @@ var userSchema = new mongoose.Schema({
     password: {
         type: String
     },
-    location: String
+    location: String,
+    likedOpportunities: [String],
+    dislikedOpportunities: [String]
 });
 
 
