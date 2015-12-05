@@ -10,6 +10,7 @@ var config = require("./config");
 var responsesMiddleware = require("./middleware/responses");
 var userRouter = require("./controllers/user_controller");
 var authRouter = require("./controllers/auth_controller");
+var opportunityRouter = require("./controllers/opportunityController");
 var companyRouter = require("./controllers/company_controller");
 var errorHandlerMiddleware = require("./middleware/404_error_handler");
 
@@ -46,6 +47,7 @@ function configure(apiExecutionMode) {
     app.use("/api", userRouter);
     app.use("/api", authRouter);
     app.use("/api", companyRouter);
+    app.use("/api", opportunityRouter);
 
     // add 404 error handling middleware in order to send custom message when no route matches client's request
     app.use(errorHandlerMiddleware);
