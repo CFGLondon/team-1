@@ -33,7 +33,7 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#login" class="nav-tab">Login</a></li>
-                    <!--<li><a href="#create-account" class="nav-tab">Create account</a></li>-->
+                    <li><a href="#create-account" class="nav-tab">Create account</a></li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>
@@ -122,6 +122,110 @@
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-9">
                             <button class="btn btn-primary btn-sm" type="submit" id="company-login-submit-button">Login</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!-- Create account template -->
+<script id="create-account-template" type="text/template">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="page-header">
+                    <h3>Create User Account</h3>
+                </div>
+
+                <form class="form-horizontal" id="create-user-account-form">
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="create-user-account-name-input">Name</label>
+                        <div class="col-sm-9">
+                            <input class="form-control input-sm" id="create-user-account-name-input" placeholder="Name" autocomplete="off" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="create-user-account-email-input">Email</label>
+                        <div class="col-sm-9">
+                            <input class="form-control input-sm" id="create-user-account-email-input" type="email" placeholder="Email" autocomplete="off" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="create-user-account-password-input">Password</label>
+                        <div class="col-sm-9">
+                            <input class="form-control input-sm" id="create-user-account-password-input" type="password" placeholder="Password" autocomplete="off" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="create-user-account-location-input">Location</label>
+                        <div class="col-sm-9">
+                            <input class="form-control input-sm" id="create-user-account-location-input" type="password" placeholder="Location" autocomplete="off" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-9">
+                            <button class="btn btn-primary btn-sm" type="submit" id="create-user-account-submit-button">Create account</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-5 col-md-offset-1">
+                <div class="page-header">
+                    <h3>Create Company Account</h3>
+                </div>
+
+                <form class="form-horizontal" id="create-company-account-form">
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="create-company-account-name-input">Name</label>
+                        <div class="col-sm-9">
+                            <input class="form-control input-sm" id="create-company-account-name-input" placeholder="Name" autocomplete="off" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="create-company-account-email-input">Email</label>
+                        <div class="col-sm-9">
+                            <input class="form-control input-sm" id="create-company-account-email-input" type="email" placeholder="Email" autocomplete="off" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="create-company-account-password-input">Password</label>
+                        <div class="col-sm-9">
+                            <input class="form-control input-sm" id="create-company-account-password-input" type="password" placeholder="Password" autocomplete="off" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="create-company-account-type-select">Type</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="create-company-account-type-select">
+                                <option value="NGO">NGO</option>
+                                <option value="Start-up">Start-up</option>
+                                <option value="Bank">Bank</option>
+                                <option value="Technology">Technology</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="create-company-account-description-input">Description</label>
+                        <div class="col-sm-9">
+                            <input class="form-control input-sm" id="create-company-account-description-input" type="password" placeholder="Description" autocomplete="off" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-9">
+                            <button class="btn btn-primary btn-sm" type="submit" id="create-company-account-submit-button">Create account</button>
                         </div>
                     </div>
                 </form>

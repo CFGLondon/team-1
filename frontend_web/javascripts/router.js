@@ -7,6 +7,7 @@ var $ = window.$;
 var homeView = require("./views/home");
 var navView = require("./views/nav");
 var loginView = require("./views/login");
+var createAccountView = require("./views/create_account");
 var pageNotFoundView = require("./views/page_not_found");
 
 window.$ = window.jQuery = require("jquery"); // needed in order to make bootstrap's javascript work
@@ -15,6 +16,7 @@ var AppRouter = Backbone.Router.extend({
     routes: {
         "home": "showHome",
         "login": "showLogin",
+        "create-account": "showCreateAccount",
         "*any": "show404"
     },
     showHome: function () {
@@ -22,6 +24,9 @@ var AppRouter = Backbone.Router.extend({
     },
     showLogin: function () {
         loginView.render();
+    },
+    showCreateAccount: function () {
+        createAccountView.render();
     },
     show404: function () {
         pageNotFoundView.render();
