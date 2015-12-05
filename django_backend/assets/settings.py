@@ -91,16 +91,9 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ACCESS_CONTROL_ALLOW_ORIGIN = 'Access-Control-Allow-Origin'
-ACCESS_CONTROL_EXPOSE_HEADERS = 'Access-Control-Expose-Headers'
-ACCESS_CONTROL_ALLOW_CREDENTIALS = 'Access-Control-Allow-Credentials'
-ACCESS_CONTROL_ALLOW_HEADERS = 'Access-Control-Allow-Headers'
-ACCESS_CONTROL_ALLOW_METHODS = 'Access-Control-Allow-Methods'
-ACCESS_CONTROL_MAX_AGE = 'Access-Control-Max-Age'
 CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'assets.urls'
