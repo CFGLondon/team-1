@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var Opportunity = require("../models/opportunity");
+var Comment = require("../models/comment");
 
 router.post("/opportunities", function (req, res) {
     var companyId = req.body.companyId;
@@ -37,6 +38,27 @@ router.get("/opportunities/:company_id", function (req, res) {
         if (err) res.sendError(500, err.message);
 
         return res.sendOk(ops);
+    });
+});
+
+router.post("/opportunities/:opportunity_id/comments", function (req, res) {
+    var userOrCompanyId = req.body.userOrCompanyId;
+    var body = req.body.body;
+    var timestmamp = req.body.timestamp;
+    var accountType = req.body.accountType;
+
+    var comment = new Comment({
+        userOrCompanyId: userOrCompanyId,
+        body: body,
+        timestamp:timestmamp,
+        accountType: accountType
+    });
+
+    Opportunity.findById(req.params.opportunity_id, function (err, op) {
+        op.comments.push(comment);
+        op.save(function (err) {
+           return res.sendOk();
+        });
     });
 });
 

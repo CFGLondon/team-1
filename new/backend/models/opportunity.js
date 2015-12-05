@@ -1,4 +1,5 @@
 var mongoose = require("mongoose");
+var Comment = require("../models/comment");
 
 var opportunitySchema = new mongoose.Schema({
     companyId: {
@@ -9,7 +10,8 @@ var opportunitySchema = new mongoose.Schema({
     },
     type: String,
     division: String,
-    location: String
+    location: String,
+    comments: [Comment.schema]
 });
 
 module.exports = mongoose.model("Opportunity", opportunitySchema);
