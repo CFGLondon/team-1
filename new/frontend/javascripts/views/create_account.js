@@ -53,9 +53,9 @@ var CreateAccountView = Backbone.View.extend({
                 self.$createUserAccountButton.text("Create account");
                 self.$createUserAccountButton.attr("disabled", false);
 
-                //Backbone.history.navigate("me", {trigger: true});
+                Backbone.history.navigate("me", {trigger: true});
 
-                //$(document).trigger("authenticated");
+                $(document).trigger("authenticated");
 
                 //new Notification({
                 //    $container: $("#notifications"),
@@ -66,8 +66,8 @@ var CreateAccountView = Backbone.View.extend({
                 console.log("success");
             },
             error: function (error) {
-                //self.$createUserAccountButton.text("Create account");
-                //self.$createUserAccountButton.attr("disabled", false);
+                self.$createUserAccountButton.text("Create account");
+                self.$createUserAccountButton.attr("disabled", false);
 
                 //new Notification({
                 //    $container: $("#notifications"),
@@ -102,9 +102,9 @@ var CreateAccountView = Backbone.View.extend({
                 self.$createUserAccountButton.text("Create account");
                 self.$createUserAccountButton.attr("disabled", false);
 
-                //Backbone.history.navigate("me", {trigger: true});
+                Backbone.history.navigate("me", {trigger: true});
 
-                //$(document).trigger("authenticated");
+                $(document).trigger("authenticated");
 
                 //new Notification({
                 //    $container: $("#notifications"),

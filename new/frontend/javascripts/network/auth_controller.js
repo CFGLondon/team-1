@@ -2,6 +2,7 @@
  * Created by manas on 05-12-2015.
  */
 
+var Backbone = require("backbone");
 var $ = require("jquery");
 var API_BASE = "http://localhost:4000/api";
 
@@ -32,6 +33,11 @@ var authController = {
                 }
             }
         });
+    },
+    logout: function () {
+        localStorage.clear();
+        Backbone.history.navigate("home", {trigger: true});
+        $(document).trigger("deauthenticated");
     },
     createAccount: function (options) {
         var self = this;
@@ -152,6 +158,9 @@ var authController = {
         } else {
             return undefined;
         }
+    },
+    isAuthenticated: function () {
+        return (localStorage.getItem("account") != undefined);
     }
 };
 

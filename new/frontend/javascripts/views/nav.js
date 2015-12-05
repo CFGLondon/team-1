@@ -5,6 +5,7 @@
 var Backbone = require("backbone");
 var $ = require("jquery");
 var swig = require("swig");
+var authController = require("../network/auth_controller");
 
 var NavView = Backbone.View.extend({
     el: "#nav",
@@ -12,13 +13,20 @@ var NavView = Backbone.View.extend({
     initialize: function () {
         var self = this;
 
+        $(document).on("authenticated", function () {
+            self.render.call(self);
+        });
+
+        $(document).on("deauthenticated", function () {
+            self.render.call(self);
+        });
+
         $(window).on("hashchange", function () {
             self.selectActiveTab(window.location.hash);
         });
     },
     render: function () {
-        //var compiledTemplate = swig.render(this.template, {locals: {user: authController.getUserFromCache()}});
-        var compiledTemplate = swig.render(this.template);
+        var compiledTemplate = swig.render(this.template, {locals: {account: authController.getAccountFromCache()}});
         this.$el.html(compiledTemplate);
 
         // select active tab before any hash change event occurs
