@@ -10,8 +10,8 @@ var authController = {
         var self = this;
 
         var types = {
-            "user": API_BASE + "/auth/api/user/register/",
-            "company": API_BASE + "/auth/api/company/register/"
+            "user": API_BASE + "/auth/api/users/",
+            "company": API_BASE + "/auth/api/companies/"
         };
 
         if (Object.keys(types).indexOf(options.type) == -1) {

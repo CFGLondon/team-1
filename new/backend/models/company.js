@@ -16,6 +16,10 @@ var companySchema = new mongoose.Schema({
     description: String
 });
 
+companySchema.statics.findOneByEmail = function (email, callback) {
+    this.model("Company").findOne({email: email}, callback);
+};
+
 companySchema.methods.hashPassword = function (callback) {
     var self = this;
 
@@ -31,6 +35,14 @@ companySchema.methods.hashPassword = function (callback) {
 
             return callback(null);
         });
+    });
+};
+
+companySchema.methods.comparePassword = function (password, callback) {
+    bcrypt.compare(password, this.password, function (err, match) {
+        if (err) return callback(err);
+
+        return callback(null, match);
     });
 };
 
