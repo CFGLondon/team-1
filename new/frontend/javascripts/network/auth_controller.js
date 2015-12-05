@@ -10,15 +10,17 @@ var authController = {
     login: function (options) {
         var self = this;
 
+        console.log(options);
         $.ajax({
             url: API_BASE + "/authenticate",
             method: "POST",
             dataType: "json",
             data: options.data,
             success: function (response) {
+                console.log(response);
                 if (response.success) {
                     self.getAccount({
-                        type: options.type,
+                        type: options.data.type,
                         accessToken: response.data.token,
                         id: response.data.id,
                         success: function (user) {

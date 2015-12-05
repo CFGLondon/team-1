@@ -5,6 +5,7 @@
 var Backbone = require("backbone");
 var $ = require("jquery");
 var swig = require("swig");
+var authController = require("../network/auth_controller");
 
 var LoginView = Backbone.View.extend({
     el: "#content",
@@ -33,7 +34,42 @@ var LoginView = Backbone.View.extend({
         var email = this.$userEmailInput.val().trim();
         var password = this.$userPasswordInput.val().trim();
 
-        alert(email + " USER " + password);
+        var self = this;
+        authController.login({
+            data: {
+                email: email,
+                password: password,
+                type: "user"
+            },
+            success: function () {
+                self.$userLoginButton.text("Login");
+                self.$userLoginButton.attr("disabled", false);
+
+                Backbone.history.navigate("me", {trigger: true});
+
+                $(document).trigger("authenticated");
+
+                //new Notification({
+                //    $container: $("#notifications"),
+                //    message: "Logged in as: <strong>" + authController.getUserFromCache().userName + "</strong>",
+                //    style: "info"
+                //}).notify("show");
+
+                console.log("success");
+            },
+            error: function (error) {
+                self.$userLoginButton.text("Login");
+                self.$userLoginButton.attr("disabled", false);
+
+                //new Notification({
+                //    $container: $("#notifications"),
+                //    message: "<strong>Error! </strong>" + error,
+                //    style: "danger"
+                //}).notify("show");
+
+                console.log("nope error!");
+            }
+        });
     },
     companyLogin: function (event) {
         event.preventDefault();
@@ -44,7 +80,42 @@ var LoginView = Backbone.View.extend({
         var email = this.$companyEmailInput.val().trim();
         var password = this.$companyPasswordInput.val().trim();
 
-        alert(email + " COMPANY " + password);
+        var self = this;
+        authController.login({
+            data: {
+                email: email,
+                password: password,
+                type: "company"
+            },
+            success: function () {
+                self.$companyLoginButton.text("Login");
+                self.$companyLoginButton.attr("disabled", false);
+
+                Backbone.history.navigate("me", {trigger: true});
+
+                $(document).trigger("authenticated");
+
+                //new Notification({
+                //    $container: $("#notifications"),
+                //    message: "Logged in as: <strong>" + authController.getUserFromCache().userName + "</strong>",
+                //    style: "info"
+                //}).notify("show");
+
+                console.log("success");
+            },
+            error: function (error) {
+                self.$companyLoginButton.text("Login");
+                self.$companyLoginButton.attr("disabled", false);
+
+                //new Notification({
+                //    $container: $("#notifications"),
+                //    message: "<strong>Error! </strong>" + error,
+                //    style: "danger"
+                //}).notify("show");
+
+                console.log("nope error!");
+            }
+        });
     }
 });
 
