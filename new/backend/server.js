@@ -9,6 +9,8 @@ var authRouter = require("./controllers/auth_controller");
 var opportunityRouter = require("./controllers/opportunityController");
 var companyRouter = require("./controllers/company_controller");
 var errorHandlerMiddleware = require("./middleware/404_error_handler");
+var generateCompanies = require("./utility/create_mockdata");
+var generateOpportunities = require("./utility/create_mockopportunities");
 
 
 // define express app
@@ -64,8 +66,20 @@ function configure(apiExecutionMode) {
     app.use("/api", companyRouter);
     app.use("/api", opportunityRouter);
 
+    app.post("/generatecompanies", function(req, res){
+        generateCompanies(100);
+        res.sendOk();
+    });
+    app.post("/generateopportunities", function(req, res){
+        generateOpportunities(10);
+        res.sendOk();
+    });
+
+
     // add 404 error handling middleware in order to send custom message when no route matches client's request
     app.use(errorHandlerMiddleware);
+
+
 }
 
 function start(apiExecutionMode) {
