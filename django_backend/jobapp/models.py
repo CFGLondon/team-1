@@ -29,7 +29,7 @@ class CompanyProfile(models.Model):
 
 class Job(models.Model):
 
-   # Many to one relationship with Journey
+   # Many to one relationship with CompanyProfile
     company_profile = models.ForeignKey(CompanyProfile, related_name='company_profile')
 
     def __unicode__(self):

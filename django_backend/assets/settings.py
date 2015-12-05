@@ -78,6 +78,7 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'authentication',
     'jobapp',
+    'corsheaders',
     'silk'
 )
 
@@ -89,8 +90,13 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
+# Allow receiving requests from a different port
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'assets.urls'
 
