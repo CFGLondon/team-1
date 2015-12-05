@@ -19,13 +19,7 @@ var userSchema = new mongoose.Schema({
     password: {
         type: String
     },
-    savedStops: {
-        type: [Number],
-        index: true
-    },
-    createdAt: {
-        type: Number
-    }
+    location: String
 });
 
 
@@ -55,16 +49,6 @@ userSchema.methods.toJSON = function() {
     // delete password hash
     delete obj.password;
 
-    // replace activity _id with id and remove _id from each of the points
-    obj.activities.forEach(function (activity) {
-        activity.id = activity._id;
-        delete activity._id;
-
-        activity.points.forEach(function (point) {
-            delete point._id;
-        });
-    });
-
     return obj;
 };
 
@@ -73,8 +57,7 @@ userSchema.methods.validateInfo = function (options, mainCallback) {
     var settings = _.extend({
         shouldValidateName: true,
         shouldValidateEmail: true,
-        shouldValidatePassword: true,
-        shouldValidateCreatedAt: true
+        shouldValidatePassword: true
     }, options);
 
     var self = this;
@@ -123,11 +106,6 @@ userSchema.methods.validateInfo = function (options, mainCallback) {
             return callback(null);
         },
         function () {
-            if (settings.shouldValidateCreatedAt) {
-                if (!self.createdAt)
-                    return mainCallback(new Error("Created At is required."));
-            }
-
             return mainCallback();
         }
     ]);

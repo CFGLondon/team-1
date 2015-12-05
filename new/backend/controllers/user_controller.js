@@ -20,12 +20,13 @@ router.route("/users")
         var name = req.body.name ? req.body.name.trim() : undefined;
         var email = req.body.email ? req.body.email.trim() : undefined;
         var password = req.body.password ? req.body.password.trim() : undefined;
+        var location = req.body.location;
 
         var user = new User({
             name: name,
             email: email,
             password: password,
-            createdAt: Date.now()
+            location: location
         });
 
         // perform validation
