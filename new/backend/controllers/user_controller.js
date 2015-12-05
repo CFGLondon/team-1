@@ -188,4 +188,80 @@ router.post("/users/:user_id/dislike-opportunity/:opportunity_id", function (req
     });
 });
 
+router.post("/users/recompute-clusters", function (req, res) {
+    var get_division_weights = function(type) {
+        switch (type) {
+            case "technology":
+                return [1, 0.5, 0.4, 0.5, 0.5, 0.2, 0.3, 0, 0, 0, 0];
+            case "science":
+                return [0.5, 1, 0.7, 0.4, 0.2, 0, 0.3, 0, 0, 0, 0];
+            case "teaching":
+                return [0.4, 0.7, 1, 0.1, 0.1, 0, 0.5, 0, 0, 0, 0];
+            case "management":
+                return [0.5, 0.4, 0.1, 1, 0.6, 0.4, 0.5, 0, 0, 0, 0];
+            case "finance":
+                return [0.5, 0.2, 0.1, 0.6, 1, 0.4, 0.5, 0, 0, 0, 0];
+            case "marketing":
+                return [0.2, 0, 0, 0.4, 0.4, 1, 0.6, 0, 0, 0, 0];
+            case "consulting":
+                return [0.3, 0.3, 0.5, 0.5, 0.5, 0.6, 1, 0, 0, 0, 0];
+        }
+    };
+
+    var get_type_weights = function(type) {
+        switch (type) {
+            case "part-time":
+                return [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0];
+            case "graduate":
+                return [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0];
+            case "competition":
+                return [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0];
+            case "apprenticeship":
+                return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1];
+        }
+    };
+
+    var vectors = [];
+    User.find({}, function (err, users) {
+        for (var i = 0; i < users.length; i++) {
+            var vector = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            var user = users[i];
+            var totalOpportunities = user.likedOpportunities.length + user.dislikedOpportunities.length;
+            for (var j = 0; j < user.likedOpportunities.length; j++) {
+                var op = user.likedOpportunities[i];
+                var weights = get_type_weights(op.type);
+                var weights2 = get_division_weights(op.division);
+                for (var jj = 0; jj < vector.length; jj++) {
+                    vector[jj] += weights[jj];
+                    vector[jj] += weights2[jj];
+                }
+            }
+
+        }
+        for (var l = 0; l < user.dislikedOpportunities.length; l++) {
+            var op = user.dislikedOpportunities[i];
+            var weights = get_type_weights(op.type);
+            var weights2 = get_division_weights(op.division);
+
+            for (var ll = 0; ll < vector.length; ll++) {
+                vector[ll] -= weights[ll];
+                vector[ll] -= weights2[ll];
+            }
+        }
+        for (var i = 0; i < vector.length; i++) {
+            if (vector[i] < 0) vector[i] = 0;
+            if (vector[i] > 1) vector[i] = 1;
+        }
+        vectors.push(vector);
+    });
+    var kmeans = require('node-kmeans');
+    kmeans.clusterize(vectors, {k: Math.ceil(Math.sqrt(users.length))}, function (err, res) {
+        if (err) console.error(err);
+        else {
+            console.log('%o', res);
+            //update user cluster
+        }
+    });
+});
+
 module.exports = router;

@@ -17,7 +17,8 @@ var userSchema = new mongoose.Schema({
     },
     location: String,
     likedOpportunities: [String],
-    dislikedOpportunities: [String]
+    dislikedOpportunities: [String],
+    cluster: Number
 });
 
 
