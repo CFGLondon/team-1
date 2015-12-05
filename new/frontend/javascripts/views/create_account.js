@@ -37,17 +37,66 @@ var CreateAccountView = Backbone.View.extend({
         var password = this.$createUserAccountPasswordInput.val().trim();
         var location = this.$createUserAccountLocationInput.val().trim();
 
-        this.$createUserAccountButton.text("Loadng...");
-        this.$createUserAccountButton.attr("disabled", true);
+        //this.$createUserAccountButton.text("Loadng...");
+        //this.$createUserAccountButton.attr("disabled", true);
 
         var self = this;
         authController.createAccount({
             type: "user",
             data: {
-                username: email,
-                //name: name,
+                email: email,
+                name: name,
                 password: password,
                 location: location
+            },
+            success: function () {
+                self.$createUserAccountButton.text("Create account");
+                self.$createUserAccountButton.attr("disabled", false);
+
+                //Backbone.history.navigate("me", {trigger: true});
+
+                //$(document).trigger("authenticated");
+
+                //new Notification({
+                //    $container: $("#notifications"),
+                //    message: "Logged in as: <strong>" + authController.getUserFromCache().userName + "</strong>",
+                //    style: "info"
+                //}).notify("show");
+
+                console.log("success");
+            },
+            error: function (error) {
+                //self.$createUserAccountButton.text("Create account");
+                //self.$createUserAccountButton.attr("disabled", false);
+
+                //new Notification({
+                //    $container: $("#notifications"),
+                //    message: "<strong>Error! </strong>" + error,
+                //    style: "danger"
+                //}).notify("show");
+
+                console.log("nope error!");
+            }
+        });
+    },
+    createCompanyAccount: function (event) {
+        event.preventDefault();
+
+        var name = this.$createCompanyAccountNameInput.val().trim();
+        var email = this.$createCompanyAccountEmailInput.val().trim();
+        var password = this.$createCompanyAccountPasswordInput.val().trim();
+        var type = this.$createCompanyAccountTypeSelect.val().trim();
+        var description = this.$createCompanyAccountDescriptionInput.val().trim();
+
+        var self = this;
+        authController.createAccount({
+            type: "company",
+            data: {
+                email: email,
+                name: name,
+                password: password,
+                description: description,
+                type: type
             },
             success: function () {
                 self.$createUserAccountButton.text("Create account");
@@ -75,24 +124,9 @@ var CreateAccountView = Backbone.View.extend({
                 //    style: "danger"
                 //}).notify("show");
 
-                console.log("error");
+                console.log("nope error!");
             }
         });
-    },
-    createCompanyAccount: function (event) {
-        event.preventDefault();
-
-        var name = this.$createCompanyAccountNameInput.val().trim();
-        var email = this.$createCompanyAccountEmailInput.val().trim();
-        var password = this.$createCompanyAccountPasswordInput.val().trim();
-        var type = this.$createCompanyAccountTypeSelect.val().trim();
-        var description = this.$createCompanyAccountDescriptionInput.val().trim();
-
-        console.log(name);
-        console.log(email);
-        console.log(password);
-        console.log(type);
-        console.log(description);
     }
 });
 

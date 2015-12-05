@@ -32,7 +32,7 @@ router.route("/companies")
                 authTokenService.issueToken(company, function (err, token) {
                     if (err) return res.sendError(err.message);
 
-                    return res.sendOk({token: token});
+                    return res.sendOk({token: token, id: company._id});
                 });
             });
         });
